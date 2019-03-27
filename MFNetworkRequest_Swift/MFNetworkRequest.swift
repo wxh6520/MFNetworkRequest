@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MBProgressHUD
 
 public enum MFNetworkRequestUsage {
     case Data //数据
@@ -56,11 +57,11 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     public func sendDataGetRequest(url:String,
-                             timeoutInterval:TimeInterval = 60,
-                             asynchronous:Bool = true,
-                             loading:Bool = true,
-                             successBlock:@escaping (String)->Void = { _ in },
-                             failedBlock:@escaping (String)->Void = { _ in }) {
+                                   timeoutInterval:TimeInterval = 60,
+                                   asynchronous:Bool = true,
+                                   loading:Bool = true,
+                                   successBlock:@escaping (String)->Void = { _ in },
+                                   failedBlock:@escaping (String)->Void = { _ in }) {
         
         sendRequest(url: url,
                     parameter: nil,
@@ -87,12 +88,12 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     public func sendDataPostRequest(url:String,
-                             parameter:Dictionary<String,String>,
-                             timeoutInterval:TimeInterval = 60,
-                             asynchronous:Bool = true,
-                             loading:Bool = true,
-                             successBlock:@escaping (String)->Void = { _ in },
-                             failedBlock:@escaping (String)->Void = { _ in }) {
+                                    parameter:Dictionary<String,String>,
+                                    timeoutInterval:TimeInterval = 60,
+                                    asynchronous:Bool = true,
+                                    loading:Bool = true,
+                                    successBlock:@escaping (String)->Void = { _ in },
+                                    failedBlock:@escaping (String)->Void = { _ in }) {
         
         sendRequest(url: url,
                     parameter: parameter,
@@ -120,13 +121,13 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     public func sendDownloadGetRequest(url:String,
-                             timeoutInterval:TimeInterval = 60,
-                             asynchronous:Bool = true,
-                             loading:Bool = true,
-                             downloadOrUploadPath:String,
-                             downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
-                             successBlock:@escaping (String)->Void = { _ in },
-                             failedBlock:@escaping (String)->Void = { _ in }) {
+                                       timeoutInterval:TimeInterval = 60,
+                                       asynchronous:Bool = true,
+                                       loading:Bool = true,
+                                       downloadOrUploadPath:String,
+                                       downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
+                                       successBlock:@escaping (String)->Void = { _ in },
+                                       failedBlock:@escaping (String)->Void = { _ in }) {
         
         sendRequest(url: url,
                     parameter: nil,
@@ -155,14 +156,14 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     public func sendDownloadPostRequest(url:String,
-                             parameter:Dictionary<String,String>,
-                             timeoutInterval:TimeInterval = 60,
-                             asynchronous:Bool = true,
-                             loading:Bool = true,
-                             downloadOrUploadPath:String,
-                             downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
-                             successBlock:@escaping (String)->Void = { _ in },
-                             failedBlock:@escaping (String)->Void = { _ in }) {
+                                        parameter:Dictionary<String,String>,
+                                        timeoutInterval:TimeInterval = 60,
+                                        asynchronous:Bool = true,
+                                        loading:Bool = true,
+                                        downloadOrUploadPath:String,
+                                        downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
+                                        successBlock:@escaping (String)->Void = { _ in },
+                                        failedBlock:@escaping (String)->Void = { _ in }) {
         
         sendRequest(url: url,
                     parameter: parameter,
@@ -191,14 +192,14 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     public func sendUploadPostRequest(url:String,
-                             parameter:Dictionary<String,String>? = nil,
-                             timeoutInterval:TimeInterval = 60,
-                             asynchronous:Bool = true,
-                             loading:Bool = true,
-                             downloadOrUploadPath:String,
-                             downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
-                             successBlock:@escaping (String)->Void = { _ in },
-                             failedBlock:@escaping (String)->Void = { _ in }) {
+                                      parameter:Dictionary<String,String>? = nil,
+                                      timeoutInterval:TimeInterval = 60,
+                                      asynchronous:Bool = true,
+                                      loading:Bool = true,
+                                      downloadOrUploadPath:String,
+                                      downloadOrUploadProgressBlock:@escaping (Float)->Void = { _ in },
+                                      successBlock:@escaping (String)->Void = { _ in },
+                                      failedBlock:@escaping (String)->Void = { _ in }) {
         
         sendRequest(url: url,
                     parameter: parameter,
@@ -229,16 +230,16 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     ///   - failedBlock: 请求失败回调
     /// - Returns: 空
     private func sendRequest(url:String,
-                     parameter:Dictionary<String,String>?,
-                     timeoutInterval:TimeInterval,
-                     httpMethod:MFHttpMethod,
-                     asynchronous:Bool,
-                     loading:Bool,
-                     usage:MFNetworkRequestUsage,
-                     downloadOrUploadPath:String,
-                     downloadOrUploadProgressBlock:@escaping (Float)->Void,
-                     successBlock:@escaping (String)->Void,
-                     failedBlock:@escaping (String)->Void) {
+                             parameter:Dictionary<String,String>?,
+                             timeoutInterval:TimeInterval,
+                             httpMethod:MFHttpMethod,
+                             asynchronous:Bool,
+                             loading:Bool,
+                             usage:MFNetworkRequestUsage,
+                             downloadOrUploadPath:String,
+                             downloadOrUploadProgressBlock:@escaping (Float)->Void,
+                             successBlock:@escaping (String)->Void,
+                             failedBlock:@escaping (String)->Void) {
         
         isLoading = loading
         
@@ -337,7 +338,7 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
         case .Download:
             
             networkRequestUsage = .Download
-
+            
             downloadOrUploadFilePath = NSString(string: downloadOrUploadPath)
             downloadOrUploadFileProgressBlock = downloadOrUploadProgressBlock
             requestSuccessBlock = successBlock
@@ -428,9 +429,9 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     }
     
     private func createRequest(url:String,
-                       parameter:Dictionary<String,String>?,
-                       timeoutInterval:TimeInterval,
-                       httpMethod:MFHttpMethod) -> NSMutableURLRequest {
+                               parameter:Dictionary<String,String>?,
+                               timeoutInterval:TimeInterval,
+                               httpMethod:MFHttpMethod) -> NSMutableURLRequest {
         
         let baseUrl = String(url as NSString)
         var request:NSMutableURLRequest
@@ -478,7 +479,8 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
                 
             } else {
                 
-                urlStr = baseUrl.addingPercentEscapes(using: .utf8) as NSString? ?? ""
+                urlStr = baseUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) as NSString? ?? ""
+                //                urlStr = baseUrl.addingPercentEscapes(using: .utf8) as NSString? ?? ""
                 
             }
             
@@ -505,8 +507,8 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
     }
     
     private func createUploadRequest(url:String,
-                               parameter:Dictionary<String,String>?,
-                               timeoutInterval:TimeInterval) -> NSMutableURLRequest {
+                                     parameter:Dictionary<String,String>?,
+                                     timeoutInterval:TimeInterval) -> NSMutableURLRequest {
         
         let baseUrl = NSString(string: url)
         var request:NSMutableURLRequest
@@ -604,10 +606,10 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
             }
             
             // 下载方法2
-//            if !isManualSuspend {
-//                
-//                totalLength = response.expectedContentLength
-//            }
+            //            if !isManualSuspend {
+            //
+            //                totalLength = response.expectedContentLength
+            //            }
             
         default:
             break
@@ -623,7 +625,7 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
             // 下载方法1
             writeHandle?.seek(toFileOffset: UInt64(currentLength))
             writeHandle?.write(data)
-            currentLength += (data as NSData).length
+            currentLength += Int64((data as NSData).length)
             
             let progress = Float(currentLength) / Float(totalLength)
             DispatchQueue.main.async {
@@ -632,14 +634,14 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
             downloadOrUploadFileProgressBlock?(progress)
             
             // 下载方法2
-//            responseData.append(data)
-//            
-//            currentLength = Int64(responseData.length)
-//            let progress = Float(currentLength) / Float(totalLength)
-//            DispatchQueue.main.async {
-//                self.hud.progress = progress
-//            }
-//            downloadOrUploadFileProgressBlock(progress)
+            //            responseData.append(data)
+            //
+            //            currentLength = Int64(responseData.length)
+            //            let progress = Float(currentLength) / Float(totalLength)
+            //            DispatchQueue.main.async {
+            //                self.hud.progress = progress
+            //            }
+            //            downloadOrUploadFileProgressBlock(progress)
             
         case .Upload:
             
@@ -663,15 +665,15 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
             requestSuccessBlock?("Succeed:true\nDownloadPath:\(downloadOrUploadFilePath)")
             
             // 下载方法2
-//            if FileManager.default.createFile(atPath: downloadOrUploadFilePath as String, contents: nil, attributes: nil) {
-//                
-//                print("下载成功，下载文件保存路径为:\(downloadOrUploadFilePath)")
-//                requestSuccessBlock("Succeed:true\nDownloadPath:\(downloadOrUploadFilePath)")
-//                
-//            } else {
-//                
-//                requestFailedBlock("创建下载文件失败")
-//            }
+            //            if FileManager.default.createFile(atPath: downloadOrUploadFilePath as String, contents: nil, attributes: nil) {
+            //
+            //                print("下载成功，下载文件保存路径为:\(downloadOrUploadFilePath)")
+            //                requestSuccessBlock("Succeed:true\nDownloadPath:\(downloadOrUploadFilePath)")
+            //
+            //            } else {
+            //
+            //                requestFailedBlock("创建下载文件失败")
+            //            }
             
         case .Upload:
             
@@ -700,7 +702,7 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
             requestFailedBlock?(error.localizedDescription)
             
             // 下载方法2
-//            requestFailedBlock(error.localizedDescription)
+            //            requestFailedBlock(error.localizedDescription)
             
         case .Upload:
             
@@ -862,7 +864,7 @@ extension MFNetworkRequest: NSURLConnectionDataDelegate,URLSessionDataDelegate,U
         
         /*
          public func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Swift.Void) {
-            saveCompletionHandler = completionHandler //完成回调保存起来
+         saveCompletionHandler = completionHandler //完成回调保存起来
          }
          */
         // 在这里调用完成回调
