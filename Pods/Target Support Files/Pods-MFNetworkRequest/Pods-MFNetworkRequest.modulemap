@@ -1,0 +1,6 @@
+framework module Pods_MFNetworkRequest {
+  umbrella header "Pods-MFNetworkRequest-umbrella.h"
+
+  export *
+  module * { export * }
+}
